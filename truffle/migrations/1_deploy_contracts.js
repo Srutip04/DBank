@@ -12,5 +12,6 @@ module.exports = async function (deployer) {
  deployer.deploy(SimpleStorage);
  deployer.deploy(Tether);
  deployer.deploy(RWD);
+ deployer.deploy(DecentralBank);
   
 };
