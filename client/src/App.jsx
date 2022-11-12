@@ -4,6 +4,7 @@ import NavBar from "./components/navbar";
 import "./App.css";
 import Web3 from 'web3';
 import Tether from "./contracts/Tether.json";
+import RWD from "./contracts/RWD.json";
 
 
 function App() {
@@ -50,6 +51,20 @@ function App() {
     } else {
       window.alert("tether contract not deployed to detect network");
     }
+
+    //Load RWD contract
+     const rwdTokenData = RWD.networks[networkId];
+     if (rwdTokenData) {
+       const rwd = new web3.eth.Contract(RWD.abi, rwdTokenData.address);
+       setRwd({rwd });
+       let rwdTokenBalance = await rwd.methods
+         .balanceOf(account)
+         .call();
+       setRwdBal({ rwdTokenBalance: rwdTokenBalance.toString() });
+       console.log(rwdBal);
+     } else {
+       window.alert("Reward Token contract not deployed to detect network");
+     }
 
   }
 
