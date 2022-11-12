@@ -5,7 +5,7 @@ import Navbar from "react-bootstrap/Navbar";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 
-const NavBar = () =>{
+const NavBar = (props) =>{
     return (
       <Navbar fixed="top" bg="dark " variant="dark" style={{ height: "50px" }}>
         <Container>
@@ -16,7 +16,7 @@ const NavBar = () =>{
             <Nav.Link style={{ fontSize: "20px" }}>
               {" "}
               <AccountBalanceWalletIcon fontSize="large" />
-              Account Number
+              Account Number {props.account}
             </Nav.Link>
           </Nav>
         </Container>
