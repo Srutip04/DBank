@@ -3,6 +3,7 @@ import React, { useState,useEffect } from "react";
 import NavBar from "./components/navbar";
 import "./App.css";
 import Web3 from 'web3';
+import Tether from "./contracts/Tether.json";
 
 
 function App() {
@@ -30,14 +31,31 @@ function App() {
   //load blockchain data
   const loadBlockchainData = async()=>{
     const web3 = window.web3;
-    const account = await web3.eth.getAccounts()
-    setAccount(account[0]);
+    const accounts = await web3.eth.getAccounts()
+    setAccount(accounts[0]);
     console.log(account);
+    const networkId = await web3.eth.net.getId();
+    console.log(networkId,"Network ID");
+
+    //Load Tether contract
+    const tetherData = Tether.networks[networkId];
+    if (tetherData) {
+      const tether = new web3.eth.Contract(Tether.abi, tetherData.address);
+      setTether({ tether });
+      let tetherBalance = await tether.methods
+        .balanceOf(account)
+        .call();
+      setTetherBal({ tetherBalance: tetherBalance.toString() });
+      console.log(tetherBal);
+    } else {
+      window.alert("tether contract not deployed to detect network");
+    }
+
   }
 
   useEffect(() => {  
     loadWeb3();
-    loadBlockchainData()
+    loadBlockchainData();
   }, [])
   
   return (
