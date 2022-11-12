@@ -31,4 +31,12 @@ contract('DecentralBank' , (accounts) =>{
        });
      });
 
+     describe('Yield Farming',async () =>{
+      it('rewards tokens for staking'), async () =>{
+        let result
+        result = await tether.balanceOf(customer)
+        assert.equal(result.toString(),tokens('100'),'customer mock wallet balance before staking')
+      }
+     })
+
 })
