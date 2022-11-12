@@ -7,7 +7,15 @@ import Web3 from 'web3';
 
 function App() {
   const [account,setAccount] = useState("0x0");
-
+  const [tether,setTether] = useState({});
+  const [rwd,setRwd] = useState({});
+  const [decentralBank, setDecentralBank] = useState({});
+  const [tetherBal,setTetherBal] = useState('0');
+  const [rwdBal, setRwdBal] = useState("0");
+  const [stakingBal, setStakingBal] = useState("0");
+  const [loading,setLoading] = useState(true);
+  
+  //load web3
   const loadWeb3 = async () =>{
      if(window.ethereuem){
       window.web3 = new Web3(window.ethereuem);
@@ -18,10 +26,12 @@ function App() {
       window.alert('No ethereum browser detected! check out metamask');
      }
   }
-
+  
+  //load blockchain data
   const loadBlockchainData = async()=>{
     const web3 = window.web3;
     const account = await web3.eth.getAccounts()
+    setAccount(account[0]);
     console.log(account);
   }
 

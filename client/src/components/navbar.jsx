@@ -9,14 +9,14 @@ const NavBar = (props) =>{
     return (
       <Navbar fixed="top" bg="dark " variant="dark" style={{ height: "50px" }}>
         <Container>
-          <Navbar.Brand  style={{ fontSize: "25px" }}>
+          <Navbar.Brand style={{ fontSize: "25px" }}>
             <AccountBalanceIcon fontSize="large" /> Decentralized Banking
           </Navbar.Brand>
-          <Nav>
-            <Nav.Link style={{ fontSize: "20px" }}>
+          <Nav className="px-3  d-sm-block">
+            <Nav.Link style={{ fontSize: "18px" }}>
               {" "}
               <AccountBalanceWalletIcon fontSize="large" />
-              Account Number {props.account}
+              <span>Account Number:</span> {props.account}
             </Nav.Link>
           </Nav>
         </Container>
