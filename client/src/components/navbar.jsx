@@ -9,11 +9,11 @@ const NavBar = () =>{
     return (
       <Navbar fixed="top" bg="dark " variant="dark" style={{ height: "50px" }}>
         <Container>
-          <Navbar.Brand href="#home" style={{ fontSize: "25px" }}>
+          <Navbar.Brand  style={{ fontSize: "25px" }}>
             <AccountBalanceIcon fontSize="large" /> Decentralized Banking
           </Navbar.Brand>
           <Nav>
-            <Nav.Link style={{ fontSize: "25px" }}>
+            <Nav.Link style={{ fontSize: "20px" }}>
               {" "}
               <AccountBalanceWalletIcon fontSize="large" />
               Account Number
