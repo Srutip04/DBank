@@ -2,6 +2,7 @@
 import React, {useState,useEffect } from "react";
 // import useSafeState from "react-use-safe-state";
 import NavBar from "./components/navbar";
+import Main from "./components/main";
 import "./App.css";
 import Web3 from 'web3';
 import Tether from "./contracts/Tether.json";
@@ -96,6 +97,17 @@ function App() {
     <div id="App">
       <NavBar account={account} />
      
+      <div className="container-fluid mt-5">
+        <div className="row">
+          <main
+            role="main"
+            className="col-lg-12 ml-auto mr-auto"
+            style={{ maxWidth: "600px", minHeight: "100vm" }}
+          >
+            <div></div>
+          </main>
+        </div>
+      </div>
     </div>
   );
 }
