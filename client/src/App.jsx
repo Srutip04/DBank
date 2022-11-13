@@ -5,6 +5,7 @@ import "./App.css";
 import Web3 from 'web3';
 import Tether from "./contracts/Tether.json";
 import RWD from "./contracts/RWD.json";
+import DecentralBank from "./contracts/DecentralBank.json";
 
 
 function App() {
@@ -32,20 +33,18 @@ function App() {
   //load blockchain data
   const loadBlockchainData = async()=>{
     const web3 = window.web3;
-    const accounts = await web3.eth.getAccounts()
+    const accounts = await web3.eth.getAccounts();
     setAccount(accounts[0]);
-    console.log(account);
+    console.log(accounts[0],"Account Number");
     const networkId = await web3.eth.net.getId();
-    console.log(networkId,"Network ID");
+    console.log(networkId, "Network ID");
 
     //Load Tether contract
     const tetherData = Tether.networks[networkId];
     if (tetherData) {
       const tether = new web3.eth.Contract(Tether.abi, tetherData.address);
       setTether({ tether });
-      let tetherBalance = await tether.methods
-        .balanceOf(account)
-        .call();
+      let tetherBalance = await tether.methods.balanceOf(account).call();
       setTetherBal({ tetherBalance: tetherBalance.toString() });
       console.log(tetherBal);
     } else {
@@ -53,19 +52,35 @@ function App() {
     }
 
     //Load RWD contract
-     const rwdTokenData = RWD.networks[networkId];
-     if (rwdTokenData) {
-       const rwd = new web3.eth.Contract(RWD.abi, rwdTokenData.address);
-       setRwd({rwd });
-       let rwdTokenBalance = await rwd.methods
-         .balanceOf(account)
-         .call();
-       setRwdBal({ rwdTokenBalance: rwdTokenBalance.toString() });
-       console.log(rwdBal);
-     } else {
-       window.alert("Reward Token contract not deployed to detect network");
-     }
+    const rwdTokenData = RWD.networks[networkId];
+    if (rwdTokenData) {
+      const rwd = new web3.eth.Contract(RWD.abi, rwdTokenData.address);
+      setRwd({ rwd });
+      let rwdTokenBalance = await rwd.methods.balanceOf(account).call();
+      setRwdBal({ rwdTokenBalance: rwdTokenBalance.toString() });
+      console.log(rwdBal);
+    } else {
+      window.alert("Reward Token contract not deployed to detect network");
+    }
 
+  
+
+    //Load DecentralBank
+    const decentralBankData = DecentralBank.networks[networkId];
+    if (decentralBankData) {
+      const decentralBank = new web3.eth.Contract(
+        DecentralBank.abi,
+        decentralBankData.address
+      );
+      setDecentralBank({ decentralBank });
+      let stakingBalance = await decentralBank.methods
+        .stakingBalance(account)
+        .call();
+      setStakingBal({ stakingBalance: stakingBalance.toString() });
+      console.log(stakingBal,"Staking Balance");
+    } else {
+      window.alert("TokenForm contract not deployed to detect network");
+    }
   }
 
   useEffect(() => {  
