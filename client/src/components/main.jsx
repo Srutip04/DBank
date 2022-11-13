@@ -1,23 +1,26 @@
 import React from "react";
+import Container from 'react-bootstrap/Container';
+import Table from "react-bootstrap/Table";
+
 
 const Main = () =>{
     return (
-      <div id="content" className="mt-3">
-        <table className="table text-muted text-center">
+      <Container className="m-5 text-center" style={{ fontSize: "18px" }}>
+        <Table striped bordered hover variant="dark">
           <thead>
-            <tr style={{ color: "black" }}>
+            <tr style={{ fontSize: "18px" }}>
               <th scope="col">Staking Balance</th>
               <th scope="col">Reward Balance</th>
             </tr>
           </thead>
           <tbody>
-            <tr style={{ color: "black" }}>
+            <tr>
               <td> USDT</td>
               <td>RWD</td>
             </tr>
           </tbody>
-        </table>
-      </div>
+        </Table>
+      </Container>
     );
 }
 

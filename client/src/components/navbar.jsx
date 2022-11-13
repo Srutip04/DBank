@@ -7,7 +7,7 @@ import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 
 const NavBar = (props) =>{
     return (
-      <Navbar fixed="top" bg="dark " variant="dark" style={{ height: "50px" }}>
+      <Navbar bg="dark " variant="dark" style={{ height: "50px" }}>
         <Container>
           <Navbar.Brand style={{ fontSize: "25px" }}>
             <AccountBalanceIcon fontSize="large" /> Decentralized Banking

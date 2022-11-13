@@ -8,6 +8,7 @@ import Web3 from 'web3';
 import Tether from "./contracts/Tether.json";
 import RWD from "./contracts/RWD.json";
 import DecentralBank from "./contracts/DecentralBank.json";
+import Container from "react-bootstrap/Container";
 
 
 function App() {
@@ -88,26 +89,19 @@ function App() {
     console.log(loading);
   }
 
-  useEffect(() => {  
+  useEffect(() => {
     loadWeb3();
     loadBlockchainData();
-  }, [])
+    
+  }, []);
   
   return (
     <div id="App">
       <NavBar account={account} />
-     
-      <div className="container-fluid mt-5">
-        <div className="row">
-          <main
-            role="main"
-            className="col-lg-12 ml-auto mr-auto"
-            style={{ maxWidth: "600px", minHeight: "100vm" }}
-          >
-            <div></div>
-          </main>
-        </div>
-      </div>
+      <Container className="m-5 ">
+        {" "}
+        <Main />
+      </Container>
     </div>
   );
 }
