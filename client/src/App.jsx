@@ -1,5 +1,6 @@
 // import { EthProvider } from "./contexts/EthContext";
-import React, { useState,useEffect } from "react";
+import React, {useState,useEffect } from "react";
+// import useSafeState from "react-use-safe-state";
 import NavBar from "./components/navbar";
 import "./App.css";
 import Web3 from 'web3';
