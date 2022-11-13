@@ -81,6 +81,9 @@ function App() {
     } else {
       window.alert("TokenForm contract not deployed to detect network");
     }
+
+    setLoading(false);
+    console.log(loading);
   }
 
   useEffect(() => {  
