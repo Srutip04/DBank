@@ -94,13 +94,16 @@ function App() {
     loadBlockchainData();
     
   }, []);
-  
+  // let content;
+  // {loading ? content = <p id="loader" className="text-center" style={{margin: "30px"}}>Loading Please....</p> : content = <Main/>}
   return (
+   
     <div id="App">
       <NavBar account={account} />
       <Container className="m-5 ">
         {" "}
         <Main />
+        {/* {content} */}
       </Container>
     </div>
   );
