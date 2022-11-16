@@ -12,7 +12,8 @@ import Stack from "react-bootstrap/Stack";
 
 
 
-const Main = () =>{
+const Main = (props) =>{
+// console.log(props.tetherBalance)
     return (
       <Container className="m-5" style={{ fontSize: "18px" }}>
         <Table className="text-center" striped bordered hover variant="dark">
@@ -24,12 +25,16 @@ const Main = () =>{
           </thead>
           <tbody>
             <tr>
-              <td> USDT</td>
-              <td>RWD</td>
+              <td>
+                {window.web3.utils.fromWei(props.stakingBalance, "Ether")} USDT
+              </td>
+              <td>
+                {window.web3.utils.fromWei(props.rwdBalance, "Ether")} RWD
+              </td>
             </tr>
           </tbody>
         </Table>
-        <Card className="mb-2" border="dark" >
+        <Card className="mb-2" border="dark">
           <Form className="mb-3">
             <Container style={{ borderSpacing: "0 1em" }}>
               <Row xs={1} md={2}>
@@ -43,7 +48,10 @@ const Main = () =>{
                 </Col>
                 <Col>
                   <span className="float-right" style={{ marginRight: "22px" }}>
-                    <b>Balance: </b>
+                    <b>
+                      Balance:{" "}
+                      {window.web3.utils.fromWei(props.tetherBalance, "Ether")}{" "}
+                    </b>
                   </span>
                 </Col>
               </Row>
@@ -78,7 +86,7 @@ const Main = () =>{
               <b>WITHDRAW</b>
             </Button>
           </Stack>
-          <Card className="text-center" style={{color:'blue'}}></Card>
+          <Card className="text-center" style={{ color: "blue" }}></Card>
         </Card>
       </Container>
     );

@@ -6,7 +6,9 @@ import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 
 const NavBar = (props) =>{
+    console.log(props.account);
     return (
+      
       <Navbar bg="dark " variant="dark" style={{ height: "50px" }}>
         <Container>
           <Navbar.Brand style={{ fontSize: "25px" }}>
