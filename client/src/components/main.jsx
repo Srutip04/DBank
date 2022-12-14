@@ -25,7 +25,8 @@ class Main extends Component {
           <tbody>
             <tr>
               <td>
-                {window.web3.utils.fromWei(this.props.stakingBalance, "Ether")} USDT
+                {window.web3.utils.fromWei(this.props.stakingBalance, "Ether")}{" "}
+                USDT
               </td>
               <td>
                 {window.web3.utils.fromWei(this.props.rwdBalance, "Ether")} RWD
@@ -34,13 +35,16 @@ class Main extends Component {
           </tbody>
         </Table>
         <Card className="mb-2" border="dark">
-          <Form className="mb-3" onSubmit={(event) =>{
-            event.preventDefault()
-            let amount;
-            amount = this.input.value.toString()
-            amount = window.web3.utils.toWei(amount,"Ether")
-            this.props.stakeTokens(amount)
-          }}>
+          <Form
+            className="mb-3"
+            onSubmit={(event) => {
+              event.preventDefault();
+              let amount;
+              amount = this.input.value.toString();
+              amount = window.web3.utils.toWei(amount, "Ether");
+              this.props.stakeTokens(amount);
+            }}
+          >
             <Container style={{ borderSpacing: "0 1em" }}>
               <Row xs={1} md={2}>
                 <Col>
@@ -55,7 +59,10 @@ class Main extends Component {
                   <span className="float-right" style={{ marginRight: "22px" }}>
                     <b>
                       Balance:{" "}
-                      {window.web3.utils.fromWei(this.props.tetherBalance, "Ether")}{" "}
+                      {window.web3.utils.fromWei(
+                        this.props.tetherBalance,
+                        "Ether"
+                      )}{" "}
                     </b>
                   </span>
                 </Col>
@@ -63,7 +70,9 @@ class Main extends Component {
 
               <InputGroup className="mb-4" size="lg" style={{ width: "250px" }}>
                 <Form.Control
-                  ref={(input) =>{this.input= input}}
+                  ref={(input) => {
+                    this.input = input;
+                  }}
                   placeholder="0"
                   type="text"
                   aria-label="stake token"
@@ -88,7 +97,15 @@ class Main extends Component {
             </Container>
           </Form>
           <Stack gap={2} className="col-md-5 mb-5 mx-auto">
-            <Button variant="primary" size="lg" value="Submit" type="submit">
+            <Button
+              variant="primary"
+              size="lg"
+              value="Submit"
+              type="submit"
+              onClick={(event) => {
+                event.preventDefault(this.props.unstakeTokens());
+              }}
+            >
               <b>WITHDRAW</b>
             </Button>
           </Stack>
