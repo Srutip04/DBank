@@ -34,7 +34,13 @@ class Main extends Component {
           </tbody>
         </Table>
         <Card className="mb-2" border="dark">
-          <Form className="mb-3">
+          <Form className="mb-3" onSubmit={(event) =>{
+            event.preventDefault()
+            let amount;
+            amount = this.input.value.toString()
+            amount = window.web3.utils.toWei(amount,"Ether")
+            this.props.stakeTokens(amount)
+          }}>
             <Container style={{ borderSpacing: "0 1em" }}>
               <Row xs={1} md={2}>
                 <Col>
@@ -57,6 +63,7 @@ class Main extends Component {
 
               <InputGroup className="mb-4" size="lg" style={{ width: "250px" }}>
                 <Form.Control
+                  ref={(input) =>{this.input= input}}
                   placeholder="0"
                   type="text"
                   aria-label="stake token"
