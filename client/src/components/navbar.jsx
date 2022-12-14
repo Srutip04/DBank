@@ -1,14 +1,14 @@
-import React from "react";
+import React, { Component } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 
-const NavBar = (props) =>{
-    console.log(props.account);
+class NavBar extends Component{
+  
+   render(){
     return (
-      
       <Navbar bg="dark " variant="dark" style={{ height: "50px" }}>
         <Container>
           <Navbar.Brand style={{ fontSize: "25px" }}>
@@ -18,12 +18,14 @@ const NavBar = (props) =>{
             <Nav.Link style={{ fontSize: "18px" }}>
               {" "}
               <AccountBalanceWalletIcon fontSize="large" />
-              <span>Account Number:</span> {props.account}
+              <span>Account Number:</span> {this.props.account}
             </Nav.Link>
           </Nav>
         </Container>
       </Navbar>
     );
-}
+   }
+  
+};
 
 export default NavBar;
