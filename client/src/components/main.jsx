@@ -1,5 +1,5 @@
-import React from "react";
-import Container from 'react-bootstrap/Container';
+import React, { Component } from "react";
+import Container from "react-bootstrap/Container";
 import Table from "react-bootstrap/Table";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
@@ -7,13 +7,12 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import InputGroup from "react-bootstrap/InputGroup";
-import {SiEthereum} from  "react-icons/si";
+import { SiEthereum } from "react-icons/si";
 import Stack from "react-bootstrap/Stack";
 
-
-
-const Main = (props) =>{
-// console.log(props.tetherBalance)
+class Main extends Component {
+  // console.log(props.tetherBalance)
+  render(){
     return (
       <Container className="m-5" style={{ fontSize: "18px" }}>
         <Table className="text-center" striped bordered hover variant="dark">
@@ -26,10 +25,10 @@ const Main = (props) =>{
           <tbody>
             <tr>
               <td>
-                {window.web3.utils.fromWei(props.stakingBalance, "Ether")} USDT
+                {window.web3.utils.fromWei(this.props.stakingBalance, "Ether")} USDT
               </td>
               <td>
-                {window.web3.utils.fromWei(props.rwdBalance, "Ether")} RWD
+                {window.web3.utils.fromWei(this.props.rwdBalance, "Ether")} RWD
               </td>
             </tr>
           </tbody>
@@ -50,7 +49,7 @@ const Main = (props) =>{
                   <span className="float-right" style={{ marginRight: "22px" }}>
                     <b>
                       Balance:{" "}
-                      {window.web3.utils.fromWei(props.tetherBalance, "Ether")}{" "}
+                      {window.web3.utils.fromWei(this.props.tetherBalance, "Ether")}{" "}
                     </b>
                   </span>
                 </Col>
@@ -90,6 +89,8 @@ const Main = (props) =>{
         </Card>
       </Container>
     );
-}
+  }
+ 
+};
 
 export default Main;
