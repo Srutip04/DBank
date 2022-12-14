@@ -1,44 +1,27 @@
 // import { EthProvider } from "./contexts/EthContext";
-import React, {useState,useEffect } from "react";
+import React, { Component } from "react";
 // import useSafeState from "react-use-safe-state";
 import NavBar from "./components/navbar";
 import Main from "./components/main";
 import "./App.css";
-import Web3 from 'web3';
+import Web3 from "web3";
 import Tether from "./contracts/Tether.json";
 import RWD from "./contracts/RWD.json";
 import DecentralBank from "./contracts/DecentralBank.json";
 import Container from "react-bootstrap/Container";
 
-
-function App() {
-  const [account,setAccount] = useState("0x0");
-  const [tether,setTether] = useState({});
-  const [rwd,setRwd] = useState({});
-  const [decentralBank, setDecentralBank] = useState({});
-  const [tetherBal,setTetherBal] = useState('0');
-  const [rwdBal, setRwdBal] = useState("0");
-  const [stakingBal, setStakingBal] = useState("0");
-  const [loading,setLoading] = useState(true);
-  
-  //load web3
-  const loadWeb3 = async () =>{
-     if(window.ethereuem){
-      window.web3 = new Web3(window.ethereuem);
-      await window.ethereuem.enable();
-     }else if(window.web3){
-        window.web3 = new Web3(window.web3.currentProvider)
-     }else{
-      window.alert('No ethereum browser detected! check out metamask');
-     }
+class App extends Component {
+  async componentWillMount() {
+    await this.loadWeb3();
+    await this.loadBlockchainData();
   }
-  
+
   //load blockchain data
-  const loadBlockchainData = async()=>{
+  async loadBlockchainData() {
     const web3 = window.web3;
     const accounts = await web3.eth.getAccounts();
-    setAccount(accounts[0]);
-    console.log(accounts[0],"Account Number");
+    console.log(accounts);
+    this.setState({ account: accounts[0] });
     const networkId = await web3.eth.net.getId();
     console.log(networkId, "Network ID");
 
@@ -46,10 +29,12 @@ function App() {
     const tetherData = Tether.networks[networkId];
     if (tetherData) {
       const tether = new web3.eth.Contract(Tether.abi, tetherData.address);
-      setTether({ tether });
-      let tetherBalance = await tether.methods.balanceOf(account).call();
-      setTetherBal({ tetherBalance: tetherBalance.toString() });
-      console.log(tetherBal);
+      this.setState({ tether });
+      let tetherBalance = await tether.methods
+        .balanceOf(this.state.account)
+        .call();
+      this.setState({ tetherBalance: tetherBalance.toString() });
+      console.log(tetherBalance);
     } else {
       window.alert("tether contract not deployed to detect network");
     }
@@ -58,15 +43,15 @@ function App() {
     const rwdTokenData = RWD.networks[networkId];
     if (rwdTokenData) {
       const rwd = new web3.eth.Contract(RWD.abi, rwdTokenData.address);
-      setRwd({ rwd });
-      let rwdTokenBalance = await rwd.methods.balanceOf(account).call();
-      setRwdBal({ rwdTokenBalance: rwdTokenBalance.toString() });
-      console.log(rwdBal);
+      this.setState({ RWD });
+      let rwdTokenBalance = await rwd.methods
+        .balanceOf(this.state.account)
+        .call();
+      this.setState({ rwdTokenBalance: rwdTokenBalance.toString() });
+      console.log(rwdTokenBalance);
     } else {
       window.alert("Reward Token contract not deployed to detect network");
     }
-
-  
 
     //Load DecentralBank
     const decentralBankData = DecentralBank.networks[networkId];
@@ -75,42 +60,87 @@ function App() {
         DecentralBank.abi,
         decentralBankData.address
       );
-      setDecentralBank({ decentralBank });
+      this.setState({ decentralBank });
       let stakingBalance = await decentralBank.methods
-        .stakingBalance(account)
+        .stakingBalance(this.state.account)
         .call();
-      setStakingBal({ stakingBalance: stakingBalance.toString() });
-      console.log(stakingBal,"Staking Balance");
+      this.setState({ stakingBalance: stakingBalance.toString() });
+      console.log(stakingBalance, "Staking Balance");
     } else {
       window.alert("TokenForm contract not deployed to detect network");
     }
 
-    setLoading(false);
-    console.log(loading);
+    this.setState({ loading: false });
+  }
+  //load web3
+  async loadWeb3() {
+    if (window.ethereuem) {
+      window.web3 = new Web3(window.ethereuem);
+      await window.ethereuem.enable();
+    } else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider);
+    } else {
+      window.alert("No ethereum browser detected! check out metamask");
+    }
+  }
+  constructor(props) {
+    super(props);
+    this.state = {
+      account: "0x0",
+      tether: {},
+      rwd: {},
+      decentralBank: {},
+      tetherBalance: "0",
+      rwdTokenBalance: "0",
+      stakingBalance: "0",
+      loading: true,
+    };
   }
 
-  useEffect(() => {
-    loadWeb3();
-    loadBlockchainData();
-    
-  }, []);
+  render() {
+    let content;
+
+    {
+      this.state.loading
+        ? (content = (
+            <p
+              id="loader"
+              className="text-center"
+              style={{ color: "white", margin: "30px" }}
+            >
+              LOADING PLEASE...
+            </p>
+          ))
+        : (content = (
+            <Main
+              tetherBalance={this.state.tetherBalance}
+              rwdBalance={this.state.rwdTokenBalance}
+              stakingBalance={this.state.stakingBalance}
+              stakeTokens={this.stakeTokens}
+              unstakeTokens={this.unstakeTokens}
+              decentralBankContract={this.decentralBank}
+            />
+          ));
+    }
+    return (
+      <div id="App" style={{ position: "relative" }}>
+        <NavBar account={this.state.account} />
+        <div className="container-fluid mt-5">
+          <div className="row">
+            <main
+              role="main"
+              className="col-lg-12 ml-auto mr-auto"
+              style={{ maxWidth: "600px", minHeight: "100vm" }}
+            >
+              <div>{content}</div>
+            </main>
+          </div>
+        </div>
+      </div>
+    );
+  }
   // let content;
   // {loading ? content = <p id="loader" className="text-center" style={{margin: "30px"}}>Loading Please....</p> : content = <Main/>}
-  
-  return (
-    <div id="App">
-      <NavBar account={account} />
-      <Container className="m-5 ">
-        {" "}
-        <Main
-          tetherBalance={tetherBal}
-          rwdBalance={rwdBal}
-          stakingBalance={stakingBal}
-        />
-        {/* {content} */}
-      </Container>
-    </div>
-  );
 }
 
 export default App;
