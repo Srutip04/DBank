@@ -85,21 +85,30 @@ class App extends Component {
     }
   }
 
-  
-  stakeTokens = (amount) =>{
-    this.setState({loading: true})
-        this.state.tether.methods
-          .approve(this.state.decentralBank._address, amount)
+  stakeTokens = (amount) => {
+    this.setState({ loading: true });
+    this.state.tether.methods
+      .approve(this.state.decentralBank._address, amount)
+      .send({ from: this.state.account })
+      .on("transactionHash", (hash) => {
+        this.state.decentralBank.methods
+          .depositTokens(amount)
           .send({ from: this.state.account })
           .on("transactionHash", (hash) => {
-            this.state.decentralBank.methods
-              .depositTokens(amount)
-              .send({ from: this.state.account })
-              .on("transactionHash", (hash) => {
-                this.setState({ loading: false });
-              });
-          }); 
-  }
+            this.setState({ loading: false });
+          });
+      });
+  };
+
+  unstakeTokens = () => {
+    this.setState({ loading: true });
+    this.state.decentralBank.methods
+      .unstakeTokens()
+      .send({ from: this.state.account })
+      .on("transactionHash", (hash) => {
+        this.setState({ loading: false });
+      });
+  };
 
   constructor(props) {
     super(props);
