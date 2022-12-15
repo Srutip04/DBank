@@ -19,6 +19,7 @@ contract DecentralBank{
     constructor(RWD _rwd, Tether _tether){
         rwd = _rwd;
         tether = _tether;
+        owner = msg.sender;
 
     }
     
